@@ -1,35 +1,20 @@
 <template>
   <div id="shopping-list">
     <h1>{{ header || 'Welcome' }}</h1>
-    <form>
-      <input v-model.trim="newItem" placeholder="Add an Item" />
+    <div class="add-item-form">
+      <input v-model="newItem" placeholder="Add an Item" />
       <label>
         <strong>High Priority</strong>
         <input type="checkbox" v-model="newItemHighPriority" />
       </label>
-    </form>
+      <button
+        v-on:click="items.push({ id: items.length + 1, label: newItem, priority: newItemHighPriority })"
+        class="btn btn-primary"
+      >Save Item</button>
+    </div>
     {{ newItem }} | {{ newItemHighPriority }}
-    <form>
-      <strong>Ice Cream Flavors</strong>
-      <label>
-        <input type="checkbox" v-model="iceCreamFlavors" value="vanilla" />
-        Vanilla
-      </label>
-      <label>
-        <input type="checkbox" v-model="iceCreamFlavors" value="chocolate" />
-        Chocolate
-      </label>
-      <label>
-        <input type="checkbox" v-model="iceCreamFlavors" value="strawberry" />
-        Strawberry
-      </label>
-      <label>
-        <input type="checkbox" v-model="iceCreamFlavors" value="Cookies-and-cream" />
-        Cookies and Cream
-      </label>
-    </form>
     <ul>
-      <li v-for="item in items" :key="item.id">{{ item.label }}</li>
+      <li v-for="item in items" :key="item.id">{{ item.label }} | {{ item.priority }}</li>
     </ul>
   </div>
 </template>
@@ -43,11 +28,10 @@ export default {
       header: 'Shopping List App',
       newItem: '',
       newItemHighPriority: false,
-      iceCreamFlavors: [],
       items: [
-        { id: 1, label: '10 party hats' },
-        { id: 2, label: '2 board games' },
-        { id: 3, label: '20 cups' },
+        { id: 1, label: '10 party hats', priority: false },
+        { id: 2, label: '2 board games', priority: false },
+        { id: 3, label: '20 cups', priority: false },
       ]
     }
   }
