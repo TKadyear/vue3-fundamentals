@@ -2,15 +2,12 @@
   <div id="shopping-list">
     <h1>{{ header || 'Welcome' }}</h1>
     <div class="add-item-form">
-      <input v-model="newItem" placeholder="Add an Item" />
+      <input @keyup.enter="saveItem" v-model="newItem" placeholder="Add an Item" />
       <label>
         <strong>High Priority</strong>
         <input type="checkbox" v-model="newItemHighPriority" />
       </label>
-      <button
-        v-on:click="items.push({ id: items.length + 1, label: newItem, priority: newItemHighPriority })"
-        class="btn btn-primary"
-      >Save Item</button>
+      <button @click="saveItem" class="btn btn-primary">Save Item</button>
     </div>
     {{ newItem }} | {{ newItemHighPriority }}
     <ul>
@@ -22,7 +19,6 @@
 <script>
 export default {
   name: 'ShoppingList',
-  /* eslint-disable */
   data() {
     return {
       header: 'Shopping List App',
@@ -34,7 +30,12 @@ export default {
         { id: 3, label: '20 cups', priority: false },
       ]
     }
-  }
+  },
+  methods: {
+    saveItem() {
+      this.items.push({ id: this.items.length + 1, label: this.newItem, priority: this.newItemHighPriority })
+    }
+  },
 }
 </script>
 
