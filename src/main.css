@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.btn{
+  @apply p-1 text-white font-bold rounded;
+}
+.btn-primary{
+  @apply bg-green-900 rounded;
+}
+.btn-cancel{
+  @apply bg-red-800 rounded;
+}

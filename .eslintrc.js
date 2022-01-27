@@ -1,16 +1,21 @@
-// eslint-disable-next-line no-undef
 module.exports = {
     "env": {
         "browser": true,
         "es2021": true
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "moduleDirectory": ["node_modules", "src/"]
+            }
+        }
     },
     "extends": [
         "eslint:recommended",
         "plugin:vue/essential"
     ],
     "parserOptions": {
-        "ecmaVersion": 12,
-        "sourceType": "module"
+        "ecmaVersion": 12
     },
     "plugins": [
         "vue"
@@ -18,3 +23,4 @@ module.exports = {
     "rules": {
     }
 };
+

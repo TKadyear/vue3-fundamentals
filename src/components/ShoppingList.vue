@@ -7,6 +7,7 @@
     </div>
     <div v-if="editing" class="add-item-form">
       <input @keyup.enter="saveItem" v-model="newItem" placeholder="Add an Item" />
+      <p class="counter">{{ characterCount }}200</p>
       <label>
         <strong>High Priority</strong>
         <input type="checkbox" v-model="newItemHighPriority" />
@@ -19,7 +20,6 @@
         v-for="item in items"
         @click="togglePurchased(item)"
         :key="item.id"
-        class="static-class"
         :class="{ strikeout: item.purchased, 'high-priority': item.priority }"
       >{{ item.label }} | {{ item.priority }}</li>
     </ul>
@@ -52,48 +52,35 @@ export default {
       this.newItemHighPriority = false;
     },
     togglePurchased(item) {
+      console.log(item)
       item.purchased = !item.purchased
     }
-  },
+  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #shopping-list {
-  width: 60%;
-  padding: 2em;
-  margin: 0 auto;
-  background-color: whitesmoke;
+  @apply w-3/5 my-0 mt-16 mx-auto flex flex-col bg-slate-200 text-center text-gray-800 rounded;
   box-shadow: 0 4px 16px 2px #00000080;
-
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-  display: flex;
-  flex-direction: column;
-  border-radius: 12px;
 }
 h1 {
-  color: #42b983;
+  @apply text-green-900;
 }
-.high-priority {
-  color: brown;
-}
-.low-priority {
-  color: darkslategrey;
-}
-.strikeout {
-  text-decoration: line-through;
-  color: gray;
+ul {
+  @apply list-none;
 }
 ul > li {
-  cursor: pointer;
+  @apply cursor-pointer;
 }
-.underline {
-  text-decoration: underline;
+.strikeout {
+  @apply line-through;
+}
+.high-priority {
+  @apply text-red-900;
 }
 </style>

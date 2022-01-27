@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-undef
 {
   "compilerOptions": {
     "target": "es5",
