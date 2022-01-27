@@ -1,25 +1,30 @@
 <template>
   <div id="shopping-list">
-    <div
-      :class="['header text-center flex my-1', editing ? ' flex-row justify-between' : 'flex-col']"
-    >
+    <div class="header text-center flex my-1flex-row justify-between">
       <h1>{{ header || 'Welcome' }}</h1>
       <button v-if="editing" @click="doEdit(false)" class="btn btn-cancel">Cancel</button>
       <button v-else @click="doEdit(true)" class="btn btn-primary">Add Item</button>
     </div>
-    <div v-if="editing" class="grid grid-colums gap-1 align-baseline">
+    <div v-if="editing" class="grid grid-colums gap-1">
       <label>
         <strong>High Priority</strong>
         <input type="checkbox" v-model="newItemHighPriority" />
       </label>
-      <input @keyup.enter="saveItem" v-model="newItem" placeholder="Add an Item" />
+      <input
+        @keyup.enter="saveItem"
+        v-model="newItem"
+        placeholder="Add an Item"
+        minlength="4"
+        maxlength="200"
+        required
+      />
       <p class="counter">{{ characterCount }}/200</p>
-      <button :disabled="newItem.length < 5" @click="saveItem" s class="btn btn-primary">Save Item</button>
+      <button :disabled="newItem.length >= 5" @click="saveItem" class="btn btn-primary">Save Item</button>
     </div>
     <p v-if="items.length === 0">Nice job! You've bought all your items!</p>
     <ul>
       <li
-        v-for="item in items"
+        v-for="item in reversedItems"
         @click="togglePurchased(item)"
         :key="item.id"
         :class="{ strikeout: item.purchased, 'high-priority': item.priority }"
@@ -46,7 +51,10 @@ export default {
   },
   methods: {
     saveItem() {
-      this.items.push({ id: this.items.length + 1, label: this.newItem, priority: this.newItemHighPriority, purchased: false })
+      if (this.newItem.length >= 5 && this.newItem.length < 200) {
+        this.items.push({ id: this.items.length + 1, label: this.newItem, priority: this.newItemHighPriority, purchased: false })
+        this.newItem = "";
+      }
     },
     doEdit(editing) {
       this.editing = editing;
@@ -62,7 +70,9 @@ export default {
     characterCount() {
       return this.newItem.length;
     },
-
+    reversedItems() {
+      return [...this.items].reverse()
+    }
   }
 }
 </script>
@@ -92,6 +102,6 @@ ul > li {
   @apply line-through;
 }
 .high-priority {
-  @apply text-red-900;
+  @apply text-red-900 font-bold;
 }
 </style>
