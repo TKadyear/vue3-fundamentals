@@ -15,7 +15,16 @@
     </div>
     <p v-if="items.length === 0">Nice job! You've bought all your items!</p>
     <ul>
-      <li v-for="item in items" :key="item.id">{{ item.label }} | {{ item.priority }}</li>
+      <li
+        v-for="item in items"
+        :key="item.id"
+        class="static-class"
+        :class="[
+          item.purchased ? 'strikeout' : '',
+          item.priority ? 'high-priority' : 'low-priority',
+          'static-class-in-array'
+        ]"
+      >{{ item.label }} | {{ item.priority }}</li>
     </ul>
   </div>
 </template>
@@ -30,12 +39,15 @@ export default {
       newItemHighPriority: false,
       editing: false,
       items: [
+        { id: 1, label: '10 party hats', priority: false, purchased: true },
+        { id: 2, label: '2 board games', priority: false, purchased: true },
+        { id: 3, label: '20 cups', priority: true, purchased: false },
       ]
     }
   },
   methods: {
     saveItem() {
-      this.items.push({ id: this.items.length + 1, label: this.newItem, priority: this.newItemHighPriority })
+      this.items.push({ id: this.items.length + 1, label: this.newItem, priority: this.newItemHighPriority, purchased: false })
     },
     doEdit(editing) {
       this.editing = editing;
@@ -66,5 +78,18 @@ export default {
 }
 h1 {
   color: #42b983;
+}
+.high-priority {
+  color: brown;
+}
+.low-priority {
+  color: darkslategrey;
+}
+.strikeout {
+  text-decoration: line-through;
+  color: gray;
+}
+.underline {
+  text-decoration: underline;
 }
 </style>
