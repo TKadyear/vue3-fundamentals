@@ -17,13 +17,10 @@
     <ul>
       <li
         v-for="item in items"
+        @click="togglePurchased(item)"
         :key="item.id"
         class="static-class"
-        :class="[
-          item.purchased ? 'strikeout' : '',
-          item.priority ? 'high-priority' : 'low-priority',
-          'static-class-in-array'
-        ]"
+        :class="{ strikeout: item.purchased, 'high-priority': item.priority }"
       >{{ item.label }} | {{ item.priority }}</li>
     </ul>
   </div>
@@ -52,6 +49,10 @@ export default {
     doEdit(editing) {
       this.editing = editing;
       this.nexItem = "";
+      this.newItemHighPriority = false;
+    },
+    togglePurchased(item) {
+      item.purchased = !item.purchased
     }
   },
 }
@@ -88,6 +89,9 @@ h1 {
 .strikeout {
   text-decoration: line-through;
   color: gray;
+}
+ul > li {
+  cursor: pointer;
 }
 .underline {
   text-decoration: underline;
